@@ -6,6 +6,6 @@ This repo contains python codes for the 12-Day program of the data-science fello
 
 ### Day 1
 
-First 5 excercises of basic data structures: refer to the notebook Day1_3.27 and calculator.py
+First 5 excercises of basic data structures: refer to the notebook Day1_3.27.ipynb and calculator.py
 
 First 5 excercises of sorting and searching: refer to the notebook Day1_
