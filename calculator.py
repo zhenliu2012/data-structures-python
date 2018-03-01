@@ -135,15 +135,15 @@ def calculator():
     toklist = []
     legalopTokens = "*/+-()"
     while True:
-        print ("Enter single token for calculator: ")
-        expr = input()
+        print ("Enter a number or operator for calculator: ")
+        expr = input().strip()
         if expr in legalopTokens or expr.isdigit():
             toklist.append( expr )
         elif expr == "=":
             break;
         else:
             print("input error: invalid token")
-            return None
+            
     if calculator_expr_check( toklist ) and calculator_paren_check( toklist ):        
         print( calculatorEval( toklist ) )
     else:
