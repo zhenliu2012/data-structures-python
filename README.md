@@ -6,6 +6,8 @@ This repo contains python codes for the 12-Day program of the data-science fello
 
 ### Day 1 - Baseline Computer Science 1
 
+[Tutorials](http://interactivepython.org/courselib/static/pythonds/index.html)
+
 First 5 excercises of *basic data structures*: refer to the notebook Day1_3.27.ipynb and calculator.py
 
 First 5 excercises of *sorting and searching*: refer to the notebook Day1_5.16.ipynb
