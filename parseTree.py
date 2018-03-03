@@ -26,9 +26,12 @@ def postorder(tree):
         print(tree.getRootVal())
 
 def buildParseTree(fpexp):
+    
+    '''requires fully parenthesized expression '''
+    
     number_or_symbol = re.compile('(\d+|[^ 0-9])')
     fplist = re.findall(number_or_symbol, fpexp)
-    print( fplist )
+#    print( fplist )
     pStack = Stack()
     eTree = BinaryTree('')
     pStack.push(eTree)
@@ -60,7 +63,53 @@ def buildParseTree(fpexp):
 
     return eTree
 
-if __name__ == "__main__":
-    buildParseTree("( (10+5 ) * 3 )").postorder()
-    buildParseTree("(( (10+5 ) * 3 )/32)").postorder()
+def buildParseTree_bool( fpexp ):
+        
+    '''requires fully parenthesized expression '''
     
+    fpexp = fpexp.strip()
+    fplist = fpexp.split()
+    pStack = Stack()
+    eTree = BinaryTree('')
+    pStack.push(eTree)
+    currentTree = eTree
+
+    for i in fplist:
+        if i == '(':
+            currentTree.insertLeft('')
+            pStack.push(currentTree)
+            currentTree = currentTree.getLeftChild()
+
+        elif i in ['and', 'or']:
+            currentTree.setRootVal(i)
+            currentTree.insertRight('')
+            pStack.push(currentTree)
+            currentTree = currentTree.getRightChild()
+            
+        elif i == 'not':
+            parent = pStack.pop()
+            currentTree = parent
+            currentTree.setRootVal(i)
+            currentTree.insertRight('')
+            pStack.push(currentTree)
+            currentTree = currentTree.getRightChild()
+            
+        elif i == ')':
+            currentTree = pStack.pop()
+
+        elif i not in ['and', 'not', 'or', ')', '(']:
+            try:
+                currentTree.setRootVal(i)
+                parent = pStack.pop()
+                currentTree = parent
+
+            except ValueError:
+                raise ValueError("token '{}' is not a valid Boolean".format(i))
+                
+    return eTree
+if __name__ == "__main__":
+#    buildParseTree("( (10+k ) * 3 )").postorder()
+    buildParseTree( "(( (10+5 ) * 3 )/32)" ).postorder()
+    buildParseTree_bool( "( True and False )" ).postorder()
+    buildParseTree_bool( "( not ( True and False ) )" ).postorder()
+    buildParseTree_bool( "( not ( ( True and False ) or True ) )" ).postorder()
