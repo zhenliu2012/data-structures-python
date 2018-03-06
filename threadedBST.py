@@ -1,8 +1,8 @@
-"""
+
 # coding: utf-8
 
-Author: Zhen Liu
-"""
+
+
 
 class BinarySearchTree:
 
@@ -26,17 +26,23 @@ class BinarySearchTree:
     def _put(self,key,val,currentNode):
         if key < currentNode.key:
             if currentNode.hasLeftChild():
-                   self._put(key,val,currentNode.leftChild)
+                self._put(key,val,currentNode.leftChild)
             else:
-                   currentNode.leftChild = TreeNode(key,val,parent=currentNode)
+                currentNode.leftChild = TreeNode(key,val,parent=currentNode)
+        elif key == currentNode.key: # replace node data if the key is already in the BST
+            currentNode.replaceNodeData(key, 
+                                        val, 
+                                        currentNode.leftChild, 
+                                        currentNode.rightChild)
         else:
             if currentNode.hasRightChild():
-                   self._put(key,val,currentNode.rightChild)
+                self._put(key,val,currentNode.rightChild)
             else:
-                   currentNode.rightChild = TreeNode(key,val,parent=currentNode)
-
+                currentNode.rightChild = TreeNode(key,val,parent=currentNode)
+                
     def __setitem__(self,k,v):
         self.put(k,v)
+        self.setThread()
 
     def get(self,key):
         if self.root:
@@ -83,7 +89,8 @@ class BinarySearchTree:
 
     def __delitem__(self,key):
         self.delete(key)
-
+        self.setThread()
+        
     def remove(self,currentNode):
         if currentNode.isLeaf(): #leaf
             if currentNode == currentNode.parent.leftChild:
@@ -135,16 +142,34 @@ class BinarySearchTree:
                     print( curr.key )
         return
 
+# define a function to reset thread     
+    def setThread( self ):
+        currNode = self.root
+        if currNode == None:
+            return
+        else:
+            currNode = currNode.findMin()
+        while currNode != None:
+            currNode.succ = currNode.findSuccessor()
+            currNode = currNode.findSuccessor()
+            
+
+
+
 
 
 class TreeNode:
-    def __init__(self,key,val,left=None,right=None,parent=None):
+    def __init__(self,key,val,left=None,right=None,parent=None,succ=None):
         self.key = key
         self.payload = val
         self.leftChild = left
         self.rightChild = right
         self.parent = parent
-
+        self.succ = succ #add reference to its successor
+        
+    def hasSuccessor(self):
+        return self.findSuccessor()
+    
     def hasLeftChild(self):
         return self.leftChild
 
@@ -221,19 +246,45 @@ class TreeNode:
 
 
 
+
 if __name__ == "__main__":
     
+    #test
     mytree = BinarySearchTree()
     mytree[3]="red"
     mytree[4]="blue"
     mytree[6]="yellow"
     mytree[2]="at"
 
-    print(mytree[6])
-    print(mytree[2])
-    print( mytree.root.key)
+    print( mytree[6] )
+    print( mytree[2] )
+    print( mytree.root.leftChild.key )
+    print( mytree.root.leftChild.succ.key )
+    print( mytree.root.rightChild.key )
+    print( mytree.root.rightChild.succ.key )
 
+    #test succ after adding and deleting a node
+    mytree[5]="test1"
+    print( mytree[5] )
+    print( mytree.root.rightChild.key )
+    print( mytree.root.rightChild.succ.key )
+
+    del mytree[5]
+    print( mytree.root.rightChild.key )
+    print( mytree.root.rightChild.succ.key )
+
+    mytree[1]="test2"
+    print( mytree[1] )
+    print( mytree.root.leftChild.leftChild.key )
+    print( mytree.root.leftChild.leftChild.succ.key )
+        
+    #test the case where the key to be added is already in the BST
+    mytree[2]="test3"
+    print( mytree[2] )
+    print( mytree.root.leftChild.key )
+    print( mytree.root.leftChild.succ.key )
+    
+    #excercise3
+    print("inorder traversal: ")
     mytree.inorder_nonrecur()
 
-    mytree[5]="test"
-    mytree.inorder_nonrecur()

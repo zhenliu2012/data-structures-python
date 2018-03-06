@@ -14,6 +14,6 @@ First 5 excercises of *sorting and searching*: refer to the notebook Day1_5.16.i
 
 ### Day 2 - Baseline Computer Science 2
 
-First 5 exercises of *Trees and Tree Algorithms*: refer to parseTree.py and Day2_6.22.ipynb
+First 5 exercises of *Trees and Tree Algorithms*: refer to parseTree.py and threadedBST.py
 
 First 5 exercises of *Graphs and  Graphs Algorithms*: 
