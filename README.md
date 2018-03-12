@@ -1,6 +1,5 @@
-# Data Structure and ADT
-
-This repo contains my python codes for learning ADT
+# Learning Python
+This repo contains some intro-level python codes.
 
 ## Notes
 
